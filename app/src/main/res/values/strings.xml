@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">SicrediEventosK</string>
+    <string name="icon_sair">Sair</string>
+    <string name="icon_voltar">Voltar</string>
+    <string name="enrolled">Inscritos:</string>
+    <string name="price">Valor:</string>
+    <string name="checkinSuc">Check-in realizada com sucessso...</string>
+    <string name="checkinError">Check-in não realizado. Erro</string>
+    <string name="checkinErrorMens">Falha ao realizar a inscrição... Favor entrar em contato via e-mail</string>
+    <string name="withoutNet">FALHA! SEM CONEXÃO COM A INTERNET</string>
+</resources>
