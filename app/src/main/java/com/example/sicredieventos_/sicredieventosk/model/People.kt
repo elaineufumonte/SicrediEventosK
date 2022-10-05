@@ -1,10 +1,11 @@
 package com.example.sicredieventos_.sicredieventosk.model
 
+import android.os.Parcel
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 
 @Parcelize
-class People : Parcelable {
+class People() : Parcelable {
     @SerializedName("eventId")
     private var eventId: String? = null
 
@@ -13,6 +14,12 @@ class People : Parcelable {
 
     @SerializedName("email")
     private var email: String? = null
+
+    constructor(parcel: Parcel) : this() {
+        eventId = parcel.readString()
+        name = parcel.readString()
+        email = parcel.readString()
+    }
 
     fun People() {}
     fun People(eventId: String?, name: String?, email: String?) {
@@ -43,6 +50,26 @@ class People : Parcelable {
 
     fun setEmail(email: String?) {
         this.email = email
+    }
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeString(eventId)
+        parcel.writeString(name)
+        parcel.writeString(email)
+    }
+
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    companion object CREATOR : Parcelable.Creator<People> {
+        override fun createFromParcel(parcel: Parcel): People {
+            return People(parcel)
+        }
+
+        override fun newArray(size: Int): Array<People?> {
+            return arrayOfNulls(size)
+        }
     }
 
 }

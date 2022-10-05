@@ -14,6 +14,7 @@ import android.view.*
 import android.widget.*
 import com.example.sicredieventos_.sicredieventosk.R
 import com.example.sicredieventos_.sicredieventosk.data.Event
+import com.example.sicredieventos_.sicredieventosk.data.PeopleK
 import com.google.gson.Gson
 import okhttp3.*
 import org.json.JSONArray

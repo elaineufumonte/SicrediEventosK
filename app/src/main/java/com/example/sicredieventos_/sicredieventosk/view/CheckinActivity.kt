@@ -15,7 +15,10 @@ import android.util.Log
 import android.view.*
 import android.widget.*
 import com.bumptech.glide.Glide
+
 import com.example.sicredieventos_.sicredieventosk.R
+import com.example.sicredieventos_.sicredieventosk.data.Event
+import com.example.sicredieventos_.sicredieventosk.databinding.ActivityCheckinBinding
 import com.example.sicredieventos_.sicredieventosk.model.Evento
 import com.example.sicredieventos_.sicredieventosk.model.PeopleEventoDTO
 import com.google.android.material.textfield.TextInputEditText
@@ -55,8 +58,7 @@ class CheckinActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_checkin)
-
+        //setContentView(R.layout.activity_checkin)
         binding = ActivityCheckinBinding.inflate(layoutInflater)
         setContentView(binding.root)
 

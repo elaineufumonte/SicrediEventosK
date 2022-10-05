@@ -1,5 +1,6 @@
 package com.example.sicredieventos_.sicredieventosk.model
 
+import android.os.Parcel
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import java.util.ArrayList
@@ -133,6 +134,14 @@ class Evento : Parcelable {
 
     fun setId(id: String?) {
         this.id = id
+    }
+
+    override fun describeContents(): Int {
+        TODO("Not yet implemented")
+    }
+
+    override fun writeToParcel(dest: Parcel, flags: Int) {
+        TODO("Not yet implemented")
     }
 
 }

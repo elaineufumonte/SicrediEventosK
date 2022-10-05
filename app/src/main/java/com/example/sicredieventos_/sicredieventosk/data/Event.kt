@@ -1,10 +1,9 @@
 package com.example.sicredieventos_.sicredieventosk.data
 
 import android.os.Parcelable
+import com.example.sicredieventos_.sicredieventosk.model.Parcelize
 import java.util.ArrayList
 
-
+@Parcelize
 data class Event (val people: ArrayList<PeopleK>, val date: Long, val description: String, val image: String, val longitude: Double, val latitude: Double, val price: Double, val title: String, val id: String) :
-    Parcelable {
-
-}
+    Parcelable

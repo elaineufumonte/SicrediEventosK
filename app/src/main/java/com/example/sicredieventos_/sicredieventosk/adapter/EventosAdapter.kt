@@ -13,6 +13,8 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sicredieventos_.sicredieventosk.R
+import com.example.sicredieventos_.sicredieventosk.model.Evento
+import com.example.sicredieventos_.sicredieventosk.view.CheckinActivity
 import com.google.gson.Gson
 import okhttp3.*
 import java.io.IOException
