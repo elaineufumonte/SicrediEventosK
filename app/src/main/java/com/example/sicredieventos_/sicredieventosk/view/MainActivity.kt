@@ -3,7 +3,6 @@ package com.example.sicredieventos_.sicredieventosk.view
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
@@ -13,6 +12,7 @@ import android.util.Log
 import android.view.*
 import android.widget.*
 import com.example.sicredieventos_.sicredieventosk.R
+import com.example.sicredieventos_.sicredieventosk.data.LoadingDialog
 import com.example.sicredieventos_.sicredieventosk.data.Event
 import com.example.sicredieventos_.sicredieventosk.data.PeopleK
 import com.google.gson.Gson
@@ -40,8 +40,15 @@ class MainActivity : AppCompatActivity() {
         val btn_listarEventos: Button =  findViewById(R.id.btn_listarEventos)
 
         btn_listarEventos.setOnClickListener(View.OnClickListener {
-            var dialog = setProgressDialog(this, "Carregando...")
-            dialog.show()
+            val loading = LoadingDialog(this)
+            loading.starLoading()
+            val handles = android.os.Handler()
+            handles.postDelayed(object :Runnable{
+                override fun run() {
+                    loading.isDismiss()
+                }
+
+            }, 5000)
             listarEventos()
         })
     }
@@ -56,7 +63,6 @@ class MainActivity : AppCompatActivity() {
                 request = Request.Builder().url(url).build()
 
             } catch (e: Exception) {
-                if (dialog!!.isShowing) dialog!!.dismiss()
                 e.printStackTrace()
                 Toast.makeText(
                     this@MainActivity,
@@ -133,7 +139,6 @@ class MainActivity : AppCompatActivity() {
                             }
                         }
                     } else {
-                        if (dialog!!.isShowing) dialog!!.dismiss()
                         if (response.code != 200) {
                             runOnUiThread {
                                 Toast.makeText(
@@ -185,49 +190,5 @@ class MainActivity : AppCompatActivity() {
                 @Suppress("DEPRECATION")
                 manager.activeNetworkInfo?.isConnected == true
         }
-    fun setProgressDialog(context: Context, message:String): AlertDialog {
-        val llPadding = 30
-        val ll = LinearLayout(context)
-        ll.orientation = LinearLayout.HORIZONTAL
-        ll.setPadding(llPadding, llPadding, llPadding, llPadding)
-        ll.gravity = Gravity.CENTER
-        var llParam = LinearLayout.LayoutParams(
-            LinearLayout.LayoutParams.WRAP_CONTENT,
-            LinearLayout.LayoutParams.WRAP_CONTENT)
-        llParam.gravity = Gravity.CENTER
-        ll.layoutParams = llParam
 
-        val progressBar = ProgressBar(context)
-        progressBar.isIndeterminate = true
-        progressBar.setPadding(0, 0, llPadding, 0)
-        progressBar.layoutParams = llParam
-
-        llParam = LinearLayout.LayoutParams(
-            ViewGroup.LayoutParams.WRAP_CONTENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT)
-        llParam.gravity = Gravity.CENTER
-        val tvText = TextView(context)
-        tvText.text = message
-        tvText.setTextColor(Color.parseColor("#000000"))
-        tvText.textSize = 20.toFloat()
-        tvText.layoutParams = llParam
-
-        ll.addView(progressBar)
-        ll.addView(tvText)
-
-        val builder = AlertDialog.Builder(context)
-        builder.setCancelable(true)
-        builder.setView(ll)
-
-        val dialog = builder.create()
-        val window = dialog.window
-        if (window != null) {
-            val layoutParams = WindowManager.LayoutParams()
-            layoutParams.copyFrom(dialog.window?.attributes)
-            layoutParams.width = LinearLayout.LayoutParams.WRAP_CONTENT
-            layoutParams.height = LinearLayout.LayoutParams.WRAP_CONTENT
-            dialog.window?.attributes = layoutParams
-        }
-        return dialog
-    }
 }

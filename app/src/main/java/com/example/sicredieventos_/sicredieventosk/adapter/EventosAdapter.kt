@@ -13,6 +13,7 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sicredieventos_.sicredieventosk.R
+import com.example.sicredieventos_.sicredieventosk.data.LoadingDialog
 import com.example.sicredieventos_.sicredieventosk.model.Evento
 import com.example.sicredieventos_.sicredieventosk.view.CheckinActivity
 import com.google.gson.Gson
@@ -24,7 +25,7 @@ import java.util.concurrent.TimeUnit
 import kotlin.collections.ArrayList
 
 class EventosAdapter(private val acontext: Activity, private val alistaId: ArrayList<String>, private val alistaTitle: ArrayList<String>) : RecyclerView.Adapter<EventosAdapter.MyViewHolder>() {//private val acontext: Activity,
-
+    private var dialog: AlertDialog? = null
     var request: Request? = null
     val locale = Locale.getDefault()
 
@@ -39,6 +40,16 @@ class EventosAdapter(private val acontext: Activity, private val alistaId: Array
 
         holder.title.setText(alistaTitle?.get(position))
         holder.btnDirecionar.setOnClickListener {
+            val loading = LoadingDialog(acontext)
+            loading.starLoading()
+            val handles = android.os.Handler()
+            handles.postDelayed(object :Runnable{
+                override fun run() {
+                    loading.isDismiss()
+                }
+
+            }, 5000)
+            
             buscarEvento(alistaId?.get(position), acontext)
         }
 
@@ -64,16 +75,16 @@ class EventosAdapter(private val acontext: Activity, private val alistaId: Array
 
         if (acontext.application.isNetworkConnected) {
 
-            val httpClient: OkHttpClient = OkHttpClient.Builder().connectTimeout(60, TimeUnit.SECONDS).build()
+            val httpClient: OkHttpClient = OkHttpClient.Builder().connectTimeout(70, TimeUnit.SECONDS).build()
             val url =
                 "https://5f5a8f24d44d640016169133.mockapi.io/api/events/" + id
             println(url)
             try {
                 request = Request.Builder().url(url).build()
             } catch (e: Exception) {
-
                 e.printStackTrace()
                 acontext.runOnUiThread {
+                    dialog?.cancel()
                     Toast.makeText(
                         acontext,
                         "Erro de conexão! Tente novamente.",
@@ -84,6 +95,7 @@ class EventosAdapter(private val acontext: Activity, private val alistaId: Array
             httpClient.newCall(request!!).enqueue(object : Callback {
                 override fun onFailure(call: Call, e: IOException) {
                     acontext.runOnUiThread {
+                        dialog?.cancel()
                         Toast.makeText(
                             acontext,
                             "Falha na requisição! ",
@@ -98,6 +110,7 @@ class EventosAdapter(private val acontext: Activity, private val alistaId: Array
                     if (response.isSuccessful) {
                         val myResponse = response.body.string()
                         acontext.runOnUiThread {
+                            //if(dialog!!.isShowing)dialog!!.cancel()
                             val gson = Gson()
                             try {
                                 val evento: Evento = gson.fromJson(myResponse, Evento::class.java)
@@ -119,6 +132,7 @@ class EventosAdapter(private val acontext: Activity, private val alistaId: Array
                                 intent.putExtra("date", evento.getDate())
                                 (acontext as AppCompatActivity).startActivity(intent)
                             } catch (e: Exception) {
+
                                 Toast.makeText(
                                     acontext,
                                     "Evento indisponível... Tente mais tarde.",
@@ -133,19 +147,20 @@ class EventosAdapter(private val acontext: Activity, private val alistaId: Array
                         if (response.code != 200) {
                             //tv_relatorio.setText("Erro! Número de matrícula inválida.");
                             acontext.runOnUiThread {
-                                //println("response.code() != 200 -> " + response.code)
+                                dialog?.cancel()
                                 Toast.makeText(
                                     acontext,
                                     "Falha ao realizar uma requisição no servidor...",
                                     Toast.LENGTH_LONG
                                 ).show()
+
                             }
                         }
                     }
                 }
             })
         } else {
-
+            dialog?.cancel()
             Toast.makeText(acontext, "FALHA! SEM CONEXÃO COM A INTERNET...", Toast.LENGTH_LONG)
                 .show()
         }
@@ -216,3 +231,5 @@ class EventosAdapter(private val acontext: Activity, private val alistaId: Array
     }
 
 }
+
+

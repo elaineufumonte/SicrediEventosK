@@ -1,7 +1,10 @@
 plugins {
     id 'com.android.application'
+    id 'project-report'
+    id 'kotlin-android'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-parcelize'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -10,6 +13,7 @@ android {
     defaultConfig {
         applicationId "com.example.sicredieventos_.sicredieventosk"
         minSdk 19
+        multiDexEnabled true
         targetSdk 33
         versionCode 1
         versionName "1.0"

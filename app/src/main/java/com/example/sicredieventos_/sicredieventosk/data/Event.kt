@@ -1,7 +1,8 @@
 package com.example.sicredieventos_.sicredieventosk.data
 
 import android.os.Parcelable
-import com.example.sicredieventos_.sicredieventosk.model.Parcelize
+import kotlinx.android.parcel.Parcelize
+
 import java.util.ArrayList
 
 @Parcelize

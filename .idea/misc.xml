@@ -4,10 +4,13 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/douva/SicrediEventosK/app/src/main/res/drawable/backgroud_btn.xml" value="0.1" />
+        <entry key="..\:/Users/douva/SicrediEventosK/app/src/main/res/drawable/ic_launcher_background.xml" value="0.121" />
         <entry key="..\:/Users/douva/SicrediEventosK/app/src/main/res/layout/activity_checkin.xml" value="0.1" />
         <entry key="..\:/Users/douva/SicrediEventosK/app/src/main/res/layout/activity_eventos.xml" value="0.1" />
         <entry key="..\:/Users/douva/SicrediEventosK/app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="..\:/Users/douva/SicrediEventosK/app/src/main/res/layout/caixa_dialog.xml" value="0.1" />
+        <entry key="..\:/Users/douva/SicrediEventosK/app/src/main/res/layout/ic_logo_sicredi_background.xml" value="0.10989583333333333" />
+        <entry key="..\:/Users/douva/SicrediEventosK/app/src/main/res/layout/loanding.xml" value="0.10989583333333333" />
         <entry key="..\:/Users/douva/SicrediEventosK/app/src/main/res/menu/menu.xml" value="0.1" />
       </map>
     </option>

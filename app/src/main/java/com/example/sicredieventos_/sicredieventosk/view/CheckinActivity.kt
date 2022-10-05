@@ -2,7 +2,6 @@ package com.example.sicredieventos_.sicredieventosk.view
 
 import android.app.AlertDialog
 import android.content.Context
-import android.graphics.Color
 import android.location.Address
 import android.location.Geocoder
 import android.net.ConnectivityManager
@@ -17,6 +16,7 @@ import android.widget.*
 import com.bumptech.glide.Glide
 
 import com.example.sicredieventos_.sicredieventosk.R
+import com.example.sicredieventos_.sicredieventosk.data.LoadingDialog
 import com.example.sicredieventos_.sicredieventosk.data.Event
 import com.example.sicredieventos_.sicredieventosk.databinding.ActivityCheckinBinding
 import com.example.sicredieventos_.sicredieventosk.model.Evento
@@ -115,9 +115,15 @@ class CheckinActivity : AppCompatActivity() {
 
         binding.btnConclui.setOnClickListener(View.OnClickListener {
             desabilita_btns()
-            /*
-            var dialog = setProgressDialog(this, "Carregando...")
-            dialog.show()*/
+            val loading = LoadingDialog(this)
+            loading.starLoading()
+            val handles = android.os.Handler()
+            handles.postDelayed(object :Runnable{
+                override fun run() {
+                    loading.isDismiss()
+                }
+
+            }, 5000)
             confereEntradas()
         })
     }
@@ -288,54 +294,6 @@ class CheckinActivity : AppCompatActivity() {
             address = addresses[0]
         }
         return address
-    }
-
-    fun setProgressDialog(context: Context, message: String): AlertDialog {
-        val llPadding = 30
-        val ll = LinearLayout(context)
-        ll.orientation = LinearLayout.HORIZONTAL
-        ll.setPadding(llPadding, llPadding, llPadding, llPadding)
-        ll.gravity = Gravity.CENTER
-        var llParam = LinearLayout.LayoutParams(
-            LinearLayout.LayoutParams.WRAP_CONTENT,
-            LinearLayout.LayoutParams.WRAP_CONTENT
-        )
-        llParam.gravity = Gravity.CENTER
-        ll.layoutParams = llParam
-
-        val progressBar = ProgressBar(context)
-        progressBar.isIndeterminate = true
-        progressBar.setPadding(0, 0, llPadding, 0)
-        progressBar.layoutParams = llParam
-
-        llParam = LinearLayout.LayoutParams(
-            ViewGroup.LayoutParams.WRAP_CONTENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT
-        )
-        llParam.gravity = Gravity.CENTER
-        val tvText = TextView(context)
-        tvText.text = message
-        tvText.setTextColor(Color.parseColor("#000000"))
-        tvText.textSize = 20.toFloat()
-        tvText.layoutParams = llParam
-
-        ll.addView(progressBar)
-        ll.addView(tvText)
-
-        val builder = AlertDialog.Builder(context)
-        builder.setCancelable(true)
-        builder.setView(ll)
-
-        val dialog = builder.create()
-        val window = dialog.window
-        if (window != null) {
-            val layoutParams = WindowManager.LayoutParams()
-            layoutParams.copyFrom(dialog.window?.attributes)
-            layoutParams.width = LinearLayout.LayoutParams.WRAP_CONTENT
-            layoutParams.height = LinearLayout.LayoutParams.WRAP_CONTENT
-            dialog.window?.attributes = layoutParams
-        }
-        return dialog
     }
 
 }
