@@ -1,7 +1,9 @@
 package com.example.sicredieventos_.sicredieventosk.model
 
-import android.os.Parcel
+//import android.os.Parcel
+//import android.os.Parcelable
 import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
 import com.google.gson.annotations.SerializedName
 import java.util.ArrayList
 
@@ -38,31 +40,6 @@ class Evento : Parcelable {
 
     @SerializedName("body")
     private val text: String? = null
-
-    fun Evento() {}
-
-    fun Evento(
-        people: ArrayList<People>,
-        date: Long,
-        description: String?,
-        image: String?,
-        longitude: Double?,
-        latitude: Double?,
-        price: Double?,
-        title: String?,
-        id: String?
-    ) {
-        this.people = people
-        this.date = date
-        this.description = description
-        this.image = image
-        this.longitude = longitude
-        this.latitude = latitude
-        this.price = price
-        this.title = title
-        this.id = id
-    }
-
 
     fun getPeople(): ArrayList<People>? {
         return people
@@ -136,16 +113,6 @@ class Evento : Parcelable {
         this.id = id
     }
 
-    override fun describeContents(): Int {
-        TODO("Not yet implemented")
-    }
-
-    override fun writeToParcel(dest: Parcel, flags: Int) {
-        TODO("Not yet implemented")
-    }
-
 }
-
-annotation class Parcelize
 
 annotation class Seriazable
